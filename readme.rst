@@ -8,7 +8,10 @@ Setup
 
 1. Install:
 
+    .. code:: bash
+
     pip install django-slowtests
+
 2. Add the following setting:
 
     TEST_RUNNER = 'django-slowtests.DiscoverSlowestTestsRunner'
