@@ -5,7 +5,7 @@ setup(
     name='django-slowtests',
     version=__version__,
     description="Locate your slowest tests.",
-    long_description=open('readme.md').read(),
+    long_description=README,
     author='Michael Herman',
     author_email='michael@realpython.com',
     url='https://github.com/realpython/django-discover-slowest-tests-runner',
