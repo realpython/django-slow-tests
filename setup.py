@@ -1,11 +1,14 @@
+import os
 from setuptools import setup
 from django_slowtests import __version__
+
+README = open(os.path.join(os.path.dirname(__file__), 'readme.rst')).read()
 
 setup(
     name='django-slowtests',
     version=__version__,
     description="Locate your slowest tests.",
-    long_description=open('readme.rst').read(),
+    long_description=README,
     author='Michael Herman',
     author_email='michael@realpython.com',
     url='https://github.com/realpython/django-discover-slowest-tests-runner',
