@@ -3,25 +3,23 @@ Django DiscoverSlowestTestsRunner
 
 Code tested on Django 1.6.5 with Python 2.7 and 3.4.
 
-Setup
+Instructions
 -----
 
 1. Install::
 
-    pip install django-slowtests
+    $ pip install django-slowtests
 
-2. Add the following setting:
+2. Add the following setting::
 
     TEST_RUNNER = 'django-slowtests.DiscoverSlowestTestsRunner'
 
-Run test suite
---------------
+3. Run test suite::
 
     ./manage.py test
 
+4. Sample output::
 
-Sample output
--------------
 
     $ python manage.py test
     Creating test database for alias 'default'...
