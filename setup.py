@@ -1,5 +1,5 @@
 from setuptools import setup
-from discover_slowest_tests_runner import __version__
+from django_slowtests import __version__
 
 setup(
     name='django-slowtests',
@@ -10,7 +10,7 @@ setup(
     author_email='michael@realpython.com',
     url='https://github.com/realpython/django-discover-slowest-tests-runner',
     license='MIT',
-    packages=['django-slowtests'],
+    packages=['django_slowtests'],
     classifiers=[
         'Environment :: Web Environment',
         'Framework :: Django',
