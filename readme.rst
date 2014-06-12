@@ -6,9 +6,7 @@ Code tested on Django 1.6.5 with Python 2.7 and 3.4.
 Setup
 -----
 
-1. Install:
-
-    .. code:: bash
+1. Install::
 
     pip install django-slowtests
 
