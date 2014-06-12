@@ -5,7 +5,7 @@ Code tested on Django 1.6.5 with Python 2.7 and 3.4.
 ## Setup
 
 1. Install: `pip install django-slowtests`
-2. Add the following setting: `TEST_RUNNER = 'discover_slowest_tests_runner.testrunner.DiscoverSlowestTestsRunner'`
+2. Add the following setting: `TEST_RUNNER = 'django-slowtests.DiscoverSlowestTestsRunner'`
 
 ## Run test suite
 

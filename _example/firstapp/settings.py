@@ -85,4 +85,4 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 # Custom test runner
-TEST_RUNNER = 'discover_slowest_tests_runner.testrunner.DiscoverSlowestTestsRunner'
+TEST_RUNNER = 'django-slowtests.testrunner.DiscoverSlowestTestsRunner'
