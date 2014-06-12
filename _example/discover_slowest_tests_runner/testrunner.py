@@ -31,7 +31,7 @@ class TimingSuite(TestSuite):
 
 class DiscoverSlowestTestsRunner(DiscoverRunner):
     """
-    Extend Django's DiscoverRunner to time the tests.
+    Runner that extends Django's DiscoverRunner to time the tests.
     """
 
     def build_suite(self, test_labels, extra_tests=None, **kwargs):

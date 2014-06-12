@@ -1,22 +1,22 @@
 # Django DiscoverSlowestTestsRunner
 
-Code Tested with Django 1.6.5.
+Code tested on Django 1.6.5 with Python 2.7 and 3.4.
 
 ## Setup
 
-1. Add *testrunner.py* to the Project Root
-2. Add the contents of *test_settings.py* to the directory containing the *settings.py* file.
+1. Install: `pip install django-slowtests`
+2. Add the following setting: `TEST_RUNNER = 'discover_slowest_tests_runner.testrunner.DiscoverSlowestTestsRunner'`
 
 ## Run test suite
 
 ```bash
-./manage.py test --settings=project_name.test_settings
+./manage.py test
 ```
 
 ## Sample output
 
 ```bash
-$ python manage.py test --settings=firstapp.test_settings
+$ python manage.py test
 Creating test database for alias 'default'...
 ..........
 ----------------------------------------------------------------------
@@ -37,3 +37,7 @@ Ten slowest tests:
 0.0002s test_was_published_recently_with_recent_poll (polls.tests.PollMethodTests)
 0.0002s test_was_published_recently_with_old_poll (polls.tests.PollMethodTests)
 ```
+
+## License
+
+This code is distributed under the terms of the MIT license. See the `LICENSE` file.
