@@ -1,0 +1,4 @@
+[run]
+source = django_slowtests
+omit = django_slowtests/tests/*
+branch = 1

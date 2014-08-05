@@ -1,29 +1,43 @@
-import os
-from setuptools import setup
-from django_slowtests import __version__
+import codecs
 
-README = open(os.path.join(os.path.dirname(__file__), 'readme.rst')).read()
+from os import path
+from setuptools import find_packages, setup
+
+
+def read(*parts):
+    filename = path.join(path.dirname(__file__), *parts)
+    with codecs.open(filename, encoding="utf-8") as fp:
+        return fp.read()
+
 
 setup(
-    name='django-slowtests',
-    version=__version__,
-    description="Locate your slowest tests.",
-    long_description=README,
-    author='Michael Herman',
-    author_email='michael@realpython.com',
-    url='https://github.com/realpython/django-discover-slowest-tests-runner',
-    license='MIT',
-    packages=['django_slowtests'],
+    author="Michael Herman",
+    author_email="michael@realpython.com",
+    description="locate your slowest tests",
+    name="django-slowtests",
+    long_description=read("README.rst"),
+    version=__import__("django_slowtests").__version__,
+    url="https://github.com/realpython/django-discover-slowest-tests-runner",
+    license="MIT",
+    packages=find_packages(),
+    tests_require=[
+        "Django>=1.4",
+    ],
+    test_suite="runtests.runtests",
     classifiers=[
-        'Environment :: Web Environment',
-        'Framework :: Django',
-        'Intended Audience :: Developers',
-        'License :: OSI Approved :: MIT License',
-        'Operating System :: OS Independent',
-        'Programming Language :: Python',
-        'Topic :: Internet :: WWW/HTTP',
-        'Topic :: Internet :: WWW/HTTP :: Dynamic Content',
-        'Topic :: Software Development :: Testing',
-        'Topic :: Software Development :: Libraries :: Python Modules',
-    ]
+        "Environment :: Web Environment",
+        "Framework :: Django",
+        "Intended Audience :: Developers",
+        "License :: OSI Approved :: MIT License",
+        "Operating System :: OS Independent",
+        "Programming Language :: Python",
+        "Programming Language :: Python :: 2.7",
+        "Programming Language :: Python :: 3.2",
+        "Programming Language :: Python :: 3.3",
+        "Topic :: Internet :: WWW/HTTP",
+        "Topic :: Internet :: WWW/HTTP :: Dynamic Content",
+        "Topic :: Software Development :: Testing",
+        "Topic :: Software Development :: Libraries :: Python Modules",
+    ],
+    zip_safe=False
 )

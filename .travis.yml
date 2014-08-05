@@ -1,0 +1,22 @@
+language: python
+
+python:
+  - 2.7
+  - 3.2
+  - 3.3
+
+env:
+  - DJANGO=https://github.com/django/django/tarball/master
+  - DJANGO=Django==1.6.5
+  - DJANGO=Django==1.5.8
+
+install:
+  - pip install -e .
+  - pip install flake8 coverage coveralls $DJANGO
+
+script:
+  - flake8 --max-line-length=100 --max-complexity=10 --statistics --benchmark django_slowtests
+  - coverage run setup.py test
+  - coverage report
+
+after_success: coveralls
