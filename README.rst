@@ -64,7 +64,7 @@ Instructions
 Running the Tests
 ------------------------------------
 
-You can run the tests with via::
+You can run the tests via::
 
     python setup.py test
 

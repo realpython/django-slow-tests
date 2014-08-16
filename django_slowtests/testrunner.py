@@ -15,7 +15,7 @@ def time_it(func):
         func(*args, **kwargs)
         end_time = time.time()
 
-        TIMINGS[unicode(func)] = end_time - start_time
+        TIMINGS[str(func)] = end_time - start_time
 
     return _timer
 
@@ -44,10 +44,10 @@ class DiscoverSlowestTestsRunner(DiscoverRunner):
     def teardown_test_environment(self, **kwargs):
         super(DiscoverSlowestTestsRunner, self).teardown_test_environment(**kwargs)
         by_time = sorted(
-            TIMINGS.iteritems(),
+            iter(TIMINGS.items()),
             key=operator.itemgetter(1),
             reverse=True
         )[:10]
         print("\nTen slowest tests:")
         for func_name, timing in by_time:
-            print("{t:.4f}s {f}".format(f=func_name, t=timing))
+            print(("{t:.4f}s {f}".format(f=func_name, t=timing)))
