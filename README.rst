@@ -29,7 +29,7 @@ Instructions
 
 2. Add the following setting::
 
-    TEST_RUNNER = 'django-slowtests.DiscoverSlowestTestsRunner'
+    TEST_RUNNER = 'django_slowtests.DiscoverSlowestTestsRunner'
 
 3. Run test suite::
 
