@@ -1,7 +1,7 @@
 import time
 import operator
 
-from django.utils.unittest import TestSuite
+from unittest import TestSuite
 from django.test.runner import DiscoverRunner
 
 
