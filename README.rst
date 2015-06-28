@@ -4,9 +4,6 @@ django-slowtests
 .. image:: https://travis-ci.org/realpython/django-slow-tests.svg?branch=master
     :target: https://travis-ci.org/realpython/django-slow-tests
 
-.. image:: https://img.shields.io/travis/realpython/django-discover-slowest-tests-runner.svg
-    :target: https://travis-ci.org/realpython/django-discover-slowest-tests-runner
-
 .. image:: https://img.shields.io/coveralls/realpython/django-discover-slowest-tests-runner.svg
     :target: https://coveralls.io/r/realpython/django-discover-slowest-tests-runner
 
