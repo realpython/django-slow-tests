@@ -2,10 +2,7 @@ import time
 import operator
 
 from unittest import TestSuite
-try:
-    from django.test.runner import DiscoverRunner
-except ImportError:
-    django.test.simple import DjangoTestSuiteRunner as DiscoverRunner
+from django.test.runner import DiscoverRunner
 
 
 TIMINGS = {}
