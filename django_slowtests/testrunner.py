@@ -5,7 +5,7 @@ from unittest import TestSuite
 try:
     from django.test.runner import DiscoverRunner
 except ImportError:
-    from discover_runner import DiscoverRunner
+    django.test.simple import DjangoTestSuiteRunner as DiscoverRunner
 
 
 TIMINGS = {}
