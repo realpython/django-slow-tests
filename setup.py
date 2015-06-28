@@ -17,11 +17,11 @@ setup(
     name="django-slowtests",
     long_description=read("README.rst"),
     version=__import__("django_slowtests").__version__,
-    url="https://github.com/realpython/django-discover-slowest-tests-runner",
+    url="https://github.com/realpython/django-slow-tests",
     license="MIT",
     packages=find_packages(),
     tests_require=[
-        "Django>=1.4",
+        "Django>=1.5",
     ],
     test_suite="runtests.runtests",
     classifiers=[
@@ -34,6 +34,7 @@ setup(
         "Programming Language :: Python :: 2.7",
         "Programming Language :: Python :: 3.2",
         "Programming Language :: Python :: 3.3",
+        "Programming Language :: Python :: 3.4",
         "Topic :: Internet :: WWW/HTTP",
         "Topic :: Internet :: WWW/HTTP :: Dynamic Content",
         "Topic :: Software Development :: Testing",
