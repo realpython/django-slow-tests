@@ -4,8 +4,8 @@ django-slowtests
 .. image:: https://travis-ci.org/realpython/django-slow-tests.svg?branch=master
     :target: https://travis-ci.org/realpython/django-slow-tests
 
-.. image:: https://img.shields.io/coveralls/realpython/django-discover-slowest-tests-runner.svg
-    :target: https://coveralls.io/r/realpython/django-discover-slowest-tests-runner
+.. image:: https://coveralls.io/repos/realpython/django-slow-tests/badge.svg
+  :target: https://coveralls.io/r/realpython/django-slow-tests
 
 .. image:: https://img.shields.io/pypi/dm/django-slowtests.svg
     :target:  https://pypi.python.org/pypi/django-slowtests/
@@ -37,12 +37,12 @@ Instructions
 
 3. Run test suite::
 
-    $ ./manage.py test
+    $ python manage.py test
 
 4. Sample output::
 
 
-    $ ./manage.py test
+    $ python manage.py test
     Creating test database for alias 'default'...
     ..........
     ----------------------------------------------------------------------
@@ -70,19 +70,19 @@ Running the Tests
 
 You can run the tests via::
 
-    python setup.py test
+    $ python setup.py test
 
 or::
 
-    make test
+    $ make test
 
 or::
 
-    make all
+    $ make all
 
 or::
 
-    python runtests.py
+    $ python runtests.py
 
 
 License
