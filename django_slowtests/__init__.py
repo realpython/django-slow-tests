@@ -1,7 +1,7 @@
 from django.core.exceptions import ImproperlyConfigured
 
 try:
-    from testrunner import DiscoverSlowestTestsRunner # NOQA
+    from testrunner import DiscoverSlowestTestsRunner  # NOQA
 except (ImportError, ImproperlyConfigured):
     pass
 
