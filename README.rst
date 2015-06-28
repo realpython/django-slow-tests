@@ -16,10 +16,12 @@ django-slowtests
 .. image:: https://img.shields.io/badge/license-MIT-blue.svg
     :target:  https://pypi.python.org/pypi/django-slowtests/
 
-
-*Code tested on Django 1.5.12, 1.6.11, 1.7.8, and 1.8.2 with Python 2.7, 3.2, 3.3 3.4.*
+Welcome!
+-----
 
 Welcome to the documentation for django-slowtests!
+
+*Code tested on Django 1.5.12, 1.6.11, 1.7.8, and 1.8.2 with Python 2.7, 3.2, 3.3, 3.4.*
 
 
 Instructions

@@ -14,8 +14,8 @@ env:
   - DJANGO=Django==1.5.8
 
 install:
-  - pip install -e .
   - pip install flake8 coverage coveralls $DJANGO
+  - pip install -e .
 
 script:
   - flake8 --max-line-length=100 --max-complexity=10 --statistics --benchmark django_slowtests
