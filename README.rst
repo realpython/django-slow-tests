@@ -4,8 +4,8 @@ django-slowtests
 .. image:: https://travis-ci.org/realpython/django-slow-tests.svg?branch=master
     :target: https://travis-ci.org/realpython/django-slow-tests
 
-.. image:: https://coveralls.io/repos/realpython/django-slow-tests/badge.svg
-  :target: https://coveralls.io/r/realpython/django-slow-tests
+.. image:: https://coveralls.io/repos/realpython/django-slow-tests/badge.svg?branch=master
+  :target: https://coveralls.io/r/realpython/django-slow-tests?branch=master
 
 .. image:: https://img.shields.io/pypi/dm/django-slowtests.svg
     :target:  https://pypi.python.org/pypi/django-slowtests/
