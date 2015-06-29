@@ -3,9 +3,11 @@ import operator
 
 from unittest import TestSuite
 from django.test.runner import DiscoverRunner
+from django.conf import settings
 
 
 TIMINGS = {}
+NUM_SLOW_TESTS = getattr(settings, 'NUM_SLOW_TESTS', 10)
 
 
 def time_it(func):
@@ -47,7 +49,7 @@ class DiscoverSlowestTestsRunner(DiscoverRunner):
             iter(TIMINGS.items()),
             key=operator.itemgetter(1),
             reverse=True
-        )[:10]
-        print("\nTen slowest tests:")
+        )[:NUM_SLOW_TESTS]
+        print("\n%s slowest tests:" % NUM_SLOW_TESTS)
         for func_name, timing in by_time:
             print(("{t:.4f}s {f}".format(f=func_name, t=timing)))
