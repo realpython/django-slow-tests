@@ -104,3 +104,4 @@ STATIC_URL = '/static/'
 
 # Custom test runner
 TEST_RUNNER = 'django_slowtests.testrunner.DiscoverSlowestTestsRunner'
+NUM_SLOW_TESTS = 5

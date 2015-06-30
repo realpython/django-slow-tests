@@ -31,9 +31,10 @@ Instructions
 
     $ pip install django-slowtests
 
-2. Add the following setting::
+2. Add the following settings::
 
     TEST_RUNNER = 'django_slowtests.DiscoverSlowestTestsRunner'
+    NUM_SLOW_TESTS = 10
 
 3. Run test suite::
 
