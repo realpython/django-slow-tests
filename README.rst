@@ -21,7 +21,7 @@ Welcome!
 
 Welcome to the documentation for django-slowtests!
 
-*Code tested on Django 1.6.11, 1.7.11, and 1.8.7, 1.9.0 with Python 2.7, 3.2, 3.3, 3.4, 3.5.*
+*Code tested on Django 1.6.11, 1.7.11, and 1.8.7, 1.9.0 with Python 2.7, 3.3, 3.4, 3.5.*
 
 
 Instructions
