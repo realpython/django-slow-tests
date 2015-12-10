@@ -79,7 +79,7 @@ class PollViewTests(TestCase):
             ['<Poll: Past poll 2.>', '<Poll: Past poll 1.>']
         )
 
-
+# dize was here
 class PollIndexDetailTests(TestCase):
 
     def test_detail_view_with_a_future_poll(self):

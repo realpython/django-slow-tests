@@ -10,7 +10,9 @@ Installation
 
 * Add the following setting::
 
-    TEST_RUNNER = 'django-slowtests.DiscoverSlowestTestsRunner'
+    # Custom test runner
+    TEST_RUNNER = 'django_slowtests.testrunner.DiscoverSlowestTestsRunner'
+    NUM_SLOW_TESTS = 10
 
 
 

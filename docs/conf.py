@@ -21,14 +21,14 @@ latex_documents = [(
     "{0} Documentation".format(project),
     "Pinax",
     "manual"
-),]
+), ]
 man_pages = [(
     "index",
     project,
     "{0} Documentation".format(project),
     ["Pinax"],
     1
-),]
+), ]
 
 sys.path.insert(0, os.pardir)
 m = __import__("django_slowtests")

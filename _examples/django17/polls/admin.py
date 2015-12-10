@@ -12,7 +12,7 @@ class PollAdmin(admin.ModelAdmin):
     list_filter = ['pub_date']
     search_fields = ['question']
     fieldsets = [
-        (None,               {'fields': ['question']}),
+        (None, {'fields': ['question']}),
         ('Date information', {'fields': ['pub_date'], 'classes': ['collapse']}),
     ]
     inlines = [ChoiceInline]
