@@ -17,7 +17,7 @@ django-slowtests
     :target:  https://pypi.python.org/pypi/django-slowtests/
 
 Welcome!
------
+--------
 
 Welcome to the documentation for django-slowtests!
 
@@ -25,7 +25,7 @@ Welcome to the documentation for django-slowtests!
 
 
 Instructions
------
+-------------
 
 1. Install::
 
