@@ -34,7 +34,7 @@ class TimingSuite(TestSuite):
                 result._previousTestClass = test.__class__
 
                 if (getattr(test.__class__, '_classSetupFailed', False) or
-                    getattr(result, '_moduleSetUpFailed', False)):
+                        getattr(result, '_moduleSetUpFailed', False)):
                     continue
 
             if not debug:
@@ -62,7 +62,6 @@ class DiscoverSlowestTestsRunner(DiscoverRunner):
     """
     test_suite = TimingSuite
     test_loader = TimingLoader()
-
 
     def teardown_test_environment(self, **kwargs):
         super(DiscoverSlowestTestsRunner, self).teardown_test_environment(**kwargs)
