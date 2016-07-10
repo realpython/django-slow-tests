@@ -89,7 +89,6 @@ or::
 Known Issues
 ------------
 
-- ``setUpClass`` is not called when using django-slowtests' test runner (see `Issue #5 <https://github.com/realpython/django-slow-tests/issues/5>`_).
 
 
 License
