@@ -33,6 +33,9 @@ Instructions
     TEST_RUNNER = 'django_slowtests.testrunner.DiscoverSlowestTestsRunner'
     NUM_SLOW_TESTS = 10
 
+    # (Optional)
+    SLOW_TEST_THRESHOLD_MS = 200  # Only show tests slower than 200ms
+
 3. Run test suite::
 
     $ python manage.py test
