@@ -20,9 +20,8 @@ setup(
     url="https://github.com/realpython/django-slow-tests",
     license="MIT",
     packages=find_packages(),
-    tests_require=[
-        "Django>=1.5",
-    ],
+    tests_require=["Django>=1.5"],
+    install_requires=["django>=1.5"],
     test_suite="runtests.runtests",
     classifiers=[
         "Environment :: Web Environment",
@@ -35,6 +34,7 @@ setup(
         "Programming Language :: Python :: 3.3",
         "Programming Language :: Python :: 3.4",
         "Programming Language :: Python :: 3.5",
+        "Programming Language :: Python :: 3.6",
         "Topic :: Internet :: WWW/HTTP",
         "Topic :: Internet :: WWW/HTTP :: Dynamic Content",
         "Topic :: Software Development :: Testing",
