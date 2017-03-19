@@ -16,7 +16,7 @@ setup(
     description="locate your slowest tests",
     name="django-slowtests",
     long_description=read("README.rst"),
-    version=__import__("django_slowtests").__version__,
+    version="0.5.1",
     url="https://github.com/realpython/django-slow-tests",
     license="MIT",
     packages=find_packages(),
