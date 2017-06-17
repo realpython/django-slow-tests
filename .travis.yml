@@ -16,7 +16,7 @@ env:
     - DJANGO=Django==1.6.11
 
 install:
-  - pip install flake8 coverage coveralls $DJANGO
+  - pip install flake8 coverage coveralls $DJANGO freezegun
   - pip install -e .
 
 matrix:

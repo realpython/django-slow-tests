@@ -7,6 +7,16 @@ from django.test.runner import DiscoverRunner
 from django.conf import settings
 
 
+try:  # pragma: no cover
+    import freezegun
+
+    def _time():
+        return freezegun.api.real_time()
+except ImportError:  # pragma: no cover
+    def _time():
+        return time.time()
+
+
 TIMINGS = {}
 NUM_SLOW_TESTS = getattr(settings, 'NUM_SLOW_TESTS', 10)
 SLOW_TEST_THRESHOLD_MS = getattr(settings, 'SLOW_TEST_THRESHOLD_MS', 0)
@@ -26,7 +36,7 @@ class TimingSuite(TestSuite):
             if result.shouldStop:
                 break
 
-            start_time = time.time()
+            start_time = _time()
 
             if _isnotsuite(test):
                 self._tearDownPreviousClass(test, result)
@@ -43,7 +53,7 @@ class TimingSuite(TestSuite):
             else:
                 test.debug()
 
-            TIMINGS[str(test)] = time.time() - start_time
+            TIMINGS[str(test)] = _time() - start_time
 
         if topLevel:
             self._tearDownPreviousClass(None, result)
