@@ -1,9 +1,6 @@
-try:
-    from django.conf.urls import patterns
-except ImportError:
-    from django.conf.urls.defaults import patterns
+from django.conf.urls import url
+from django.views.generic import TemplateView
 
-
-urlpatterns = patterns(
-    "",
-)
+urlpatterns = [
+    url('', TemplateView.as_view()),
+]

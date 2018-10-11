@@ -23,7 +23,7 @@ DEFAULT_SETTINGS = dict(
     },
     SITE_ID=1,
     ROOT_URLCONF="django_slowtests.tests.urls",
-    SECRET_KEY="notasecret",
+    SECRET_KEY="not-a-secret",
 )
 
 
