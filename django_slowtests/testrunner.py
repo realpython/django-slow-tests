@@ -18,8 +18,6 @@ except ImportError:  # pragma: no cover
 
 
 TIMINGS = {}
-NUM_SLOW_TESTS = getattr(settings, 'NUM_SLOW_TESTS', 10)
-SLOW_TEST_THRESHOLD_MS = getattr(settings, 'SLOW_TEST_THRESHOLD_MS', 0)
 
 
 class TimingSuite(TestSuite):
@@ -76,6 +74,9 @@ class DiscoverSlowestTestsRunner(DiscoverRunner):
 
     def teardown_test_environment(self, **kwargs):
         super(DiscoverSlowestTestsRunner, self).teardown_test_environment(**kwargs)
+
+        NUM_SLOW_TESTS = getattr(settings, 'NUM_SLOW_TESTS', 10)
+        SLOW_TEST_THRESHOLD_MS = getattr(settings, 'SLOW_TEST_THRESHOLD_MS', 0)
 
         # Grab slowest tests
         by_time = sorted(
