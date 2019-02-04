@@ -31,7 +31,7 @@ matrix:
       env: DJANGO=Django==1.6.11
 
 script:
-  - flake8 --max-line-length=100 --max-complexity=10 --statistics --benchmark django_slowtests
+  - flake8 --max-line-length=100 --max-complexity=13 --statistics --benchmark django_slowtests
   - coverage run setup.py test
   - coverage report
 

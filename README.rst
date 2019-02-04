@@ -43,6 +43,11 @@ Instructions
 
     $ python manage.py test
 
+
+3.1. Save report to file::
+
+    $ python manage.py test --slowreportpath report.json
+
 4. Sample output::
 
 

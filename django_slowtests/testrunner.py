@@ -1,8 +1,10 @@
 import glob
+import json
 import time
 import os
 import os.path
 from unittest import TestSuite, TestLoader
+from unittest.runner import TextTestRunner, registerResult
 from unittest.suite import _isnotsuite
 from django.test.runner import DiscoverRunner
 from django.conf import settings
@@ -18,7 +20,66 @@ except ImportError:  # pragma: no cover
         return time.time()
 
 
-TIMINGS = {}
+class TimingTextTestRunner(TextTestRunner):
+    def run(self, test):
+        "Run the given test case or test suite."
+        result = self._makeResult()
+        registerResult(result)
+        result.failfast = self.failfast
+        result.buffer = self.buffer
+        startTime = time.time()
+        startTestRun = getattr(result, 'startTestRun', None)
+        if startTestRun is not None:
+            startTestRun()
+        try:
+            test(result)
+        finally:
+            stopTestRun = getattr(result, 'stopTestRun', None)
+            if stopTestRun is not None:
+                stopTestRun()
+        stopTime = time.time()
+        timeTaken = stopTime - startTime
+        result.printErrors()
+        if hasattr(result, 'separator2'):
+            self.stream.writeln(result.separator2)
+        run = result.testsRun
+        self.stream.writeln("Ran %d test%s in %.3fs" %
+                            (run, run != 1 and "s" or "", timeTaken))
+        self.stream.writeln()
+
+        expectedFails = unexpectedSuccesses = skipped = 0
+        try:
+            results = map(len, (result.expectedFailures,
+                                result.unexpectedSuccesses,
+                                result.skipped))
+        except AttributeError:
+            pass
+        else:
+            expectedFails, unexpectedSuccesses, skipped = results
+
+        infos = []
+        if not result.wasSuccessful():
+            self.stream.write("FAILED")
+            failed, errored = map(len, (result.failures, result.errors))
+            if failed:
+                infos.append("failures=%d" % failed)
+            if errored:
+                infos.append("errors=%d" % errored)
+        else:
+            self.stream.write("OK")
+        if skipped:
+            infos.append("skipped=%d" % skipped)
+        if expectedFails:
+            infos.append("expected failures=%d" % expectedFails)
+        if unexpectedSuccesses:
+            infos.append("unexpected successes=%d" % unexpectedSuccesses)
+        if infos:
+            self.stream.writeln(" (%s)" % (", ".join(infos),))
+        else:
+            self.stream.write("\n")
+        # save timeTaken for later use in report
+        result.timeTaken = timeTaken
+        return result
 
 
 class TimingSuite(TestSuite):
@@ -31,7 +92,9 @@ class TimingSuite(TestSuite):
         )
         file_name = '{}{}.txt'.format(file_prefix, os.getpid())
         with open(file_name, "a+") as f:
-            f.write("{},{}\n".format(test_name, duration))
+            f.write("{name},{duration:.6f}\n".format(
+                name=test_name, duration=duration
+            ))
 
     def run(self, result, debug=False):
         topLevel = False
@@ -78,10 +141,12 @@ class DiscoverSlowestTestsRunner(DiscoverRunner):
     """
     test_suite = TimingSuite
     test_loader = TimingLoader()
+    test_runner = TimingTextTestRunner
 
-    def __init__(self, generate_report=False, **kwargs):
+    def __init__(self, report_path=None, generate_report=False, **kwargs):
         super(DiscoverSlowestTestsRunner, self).__init__(**kwargs)
-        self.generate_report = generate_report
+        self.report_path = report_path[0] if report_path else None
+        self.should_generate_report = generate_report
 
     @classmethod
     def add_arguments(cls, parser):
@@ -92,6 +157,46 @@ class DiscoverSlowestTestsRunner(DiscoverRunner):
             dest='generate_report',
             help='Generate a report of slowest tests',
         )
+        parser.add_argument(
+            '--slowreportpath',
+            nargs=1,
+            dest='report_path',
+            help='Save report to given file'
+        )
+
+    def generate_report(self, test_results, result):
+        test_result_count = len(test_results)
+        SLOW_TEST_THRESHOLD_MS = getattr(settings, 'SLOW_TEST_THRESHOLD_MS', 0)
+
+        if self.report_path:
+            data = {
+                'threshold': SLOW_TEST_THRESHOLD_MS,
+                'slower_tests': [
+                    {"name": func_name, "execution_time": float(timing)}
+                    for func_name, timing in test_results
+                ],
+                'nb_tests': result.testsRun,
+                'nb_failed': len(result.errors + result.failures),
+                'total_execution_time': result.timeTaken,
+            }
+            with open(self.report_path, 'w') as outfile:
+                json.dump(data, outfile)
+        else:
+            if test_result_count:
+                if SLOW_TEST_THRESHOLD_MS:
+                    print("\n{r} slowest tests over {ms}ms:".format(
+                        r=test_result_count, ms=SLOW_TEST_THRESHOLD_MS)
+                    )
+                else:
+                    print("\n{r} slowest tests:".format(r=test_result_count))
+
+            for func_name, timing in test_results:
+                print("{t:.4f}s {f}".format(f=func_name, t=timing))
+
+            if not len(test_results) and SLOW_TEST_THRESHOLD_MS:
+                print("\nNo tests slower than {ms}ms".format(
+                    ms=SLOW_TEST_THRESHOLD_MS)
+                )
 
     def read_timing_files(self):
         file_prefix = getattr(
@@ -114,23 +219,21 @@ class DiscoverSlowestTestsRunner(DiscoverRunner):
         for report_file in self.read_timing_files():
             os.remove(report_file)
 
-    def teardown_test_environment(self, **kwargs):
-        super(DiscoverSlowestTestsRunner, self).teardown_test_environment(
-            **kwargs
-        )
-        timings = self.get_timings()
+    def suite_result(self, suite, result):
+        super(DiscoverSlowestTestsRunner, self).suite_result(suite, result)
         NUM_SLOW_TESTS = getattr(settings, 'NUM_SLOW_TESTS', 10)
         SLOW_TEST_THRESHOLD_MS = getattr(settings, 'SLOW_TEST_THRESHOLD_MS', 0)
 
         should_generate_report = (
             getattr(settings, 'ALWAYS_GENERATE_SLOW_REPORT', True) or
-            self.generate_report
+            self.should_generate_report
         )
         if not should_generate_report:
             self.remove_timing_tmp_files()
             return
 
         # Grab slowest tests
+        timings = self.get_timings()
         by_time = sorted(
             timings, key=lambda x: x[1], reverse=True
         )[:NUM_SLOW_TESTS]
@@ -151,18 +254,4 @@ class DiscoverSlowestTestsRunner(DiscoverRunner):
 
                 test_results.append(result)
 
-        test_result_count = len(test_results)
-
-        if test_result_count:
-            if SLOW_TEST_THRESHOLD_MS:
-                print("\n{r} slowest tests over {ms}ms:".format(
-                    r=test_result_count, ms=SLOW_TEST_THRESHOLD_MS)
-                )
-            else:
-                print("\n{r} slowest tests:".format(r=test_result_count))
-
-        for func_name, timing in test_results:
-            print(("{t:.4f}s {f}".format(f=func_name, t=float(timing))))
-
-        if not len(test_results) and SLOW_TEST_THRESHOLD_MS:
-            print("\nNo tests slower than {ms}ms".format(ms=SLOW_TEST_THRESHOLD_MS))
+        self.generate_report(test_results, result)
