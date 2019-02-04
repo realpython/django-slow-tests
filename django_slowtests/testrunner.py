@@ -1,6 +1,7 @@
+import glob
 import time
-import operator
-
+import os
+import os.path
 from unittest import TestSuite, TestLoader
 from unittest.suite import _isnotsuite
 from django.test.runner import DiscoverRunner
@@ -24,6 +25,13 @@ class TimingSuite(TestSuite):
     """
     TestSuite wrapper that times each test.
     """
+    def save_test_time(self, test_name, duration):
+        file_prefix = getattr(
+            settings, 'TESTS_REPORT_TMP_FILES_PREFIX', '_tests_report_'
+        )
+        file_name = '{}{}.txt'.format(file_prefix, os.getpid())
+        with open(file_name, "a+") as f:
+            f.write("{},{}\n".format(test_name, duration))
 
     def run(self, result, debug=False):
         topLevel = False
@@ -50,8 +58,7 @@ class TimingSuite(TestSuite):
                 test(result)
             else:
                 test.debug()
-
-            TIMINGS[str(test)] = _time() - start_time
+            self.save_test_time(str(test), _time() - start_time)
 
         if topLevel:
             self._tearDownPreviousClass(None, result)
@@ -86,9 +93,32 @@ class DiscoverSlowestTestsRunner(DiscoverRunner):
             help='Generate a report of slowest tests',
         )
 
-    def teardown_test_environment(self, **kwargs):
-        super(DiscoverSlowestTestsRunner, self).teardown_test_environment(**kwargs)
+    def read_timing_files(self):
+        file_prefix = getattr(
+            settings, 'TESTS_REPORT_TMP_FILES_PREFIX', '_tests_report_'
+        )
+        files = glob.glob("{}*.txt".format(file_prefix))
+        for report_file in files:
+            yield report_file
 
+    def get_timings(self):
+        timings = []
+        for report_file in self.read_timing_files():
+            with open(report_file, "r") as f:
+                for line in f:
+                    timings.append(line.strip('\n').split(','))
+            os.remove(report_file)
+        return timings
+
+    def remove_timing_tmp_files(self):
+        for report_file in self.read_timing_files():
+            os.remove(report_file)
+
+    def teardown_test_environment(self, **kwargs):
+        super(DiscoverSlowestTestsRunner, self).teardown_test_environment(
+            **kwargs
+        )
+        timings = self.get_timings()
         NUM_SLOW_TESTS = getattr(settings, 'NUM_SLOW_TESTS', 10)
         SLOW_TEST_THRESHOLD_MS = getattr(settings, 'SLOW_TEST_THRESHOLD_MS', 0)
 
@@ -97,14 +127,13 @@ class DiscoverSlowestTestsRunner(DiscoverRunner):
             self.generate_report
         )
         if not should_generate_report:
+            self.remove_timing_tmp_files()
             return
+
         # Grab slowest tests
         by_time = sorted(
-            iter(TIMINGS.items()),
-            key=operator.itemgetter(1),
-            reverse=True
+            timings, key=lambda x: x[1], reverse=True
         )[:NUM_SLOW_TESTS]
-
         test_results = by_time
 
         if SLOW_TEST_THRESHOLD_MS:
@@ -133,7 +162,7 @@ class DiscoverSlowestTestsRunner(DiscoverRunner):
                 print("\n{r} slowest tests:".format(r=test_result_count))
 
         for func_name, timing in test_results:
-            print(("{t:.4f}s {f}".format(f=func_name, t=timing)))
+            print(("{t:.4f}s {f}".format(f=func_name, t=float(timing))))
 
         if not len(test_results) and SLOW_TEST_THRESHOLD_MS:
             print("\nNo tests slower than {ms}ms".format(ms=SLOW_TEST_THRESHOLD_MS))
