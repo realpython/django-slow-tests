@@ -72,12 +72,32 @@ class DiscoverSlowestTestsRunner(DiscoverRunner):
     test_suite = TimingSuite
     test_loader = TimingLoader()
 
+    def __init__(self, generate_report=False, **kwargs):
+        super(DiscoverSlowestTestsRunner, self).__init__(**kwargs)
+        self.generate_report = generate_report
+
+    @classmethod
+    def add_arguments(cls, parser):
+        DiscoverRunner.add_arguments(parser)
+        parser.add_argument(
+            '--slowreport',
+            action='store_true',
+            dest='generate_report',
+            help='Generate a report of slowest tests',
+        )
+
     def teardown_test_environment(self, **kwargs):
         super(DiscoverSlowestTestsRunner, self).teardown_test_environment(**kwargs)
 
         NUM_SLOW_TESTS = getattr(settings, 'NUM_SLOW_TESTS', 10)
         SLOW_TEST_THRESHOLD_MS = getattr(settings, 'SLOW_TEST_THRESHOLD_MS', 0)
 
+        should_generate_report = (
+            getattr(settings, 'ALWAYS_GENERATE_SLOW_REPORT', True) or
+            self.generate_report
+        )
+        if not should_generate_report:
+            return
         # Grab slowest tests
         by_time = sorted(
             iter(TIMINGS.items()),

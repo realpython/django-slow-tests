@@ -36,6 +36,9 @@ Instructions
     # (Optional)
     SLOW_TEST_THRESHOLD_MS = 200  # Only show tests slower than 200ms
 
+    # (Optional)
+    ALWAYS_GENERATE_SLOW_REPORT = False  # Generate report only when requested using --slowreport flag
+
 3. Run test suite::
 
     $ python manage.py test
