@@ -3,6 +3,8 @@ import codecs
 from os import path
 from setuptools import find_packages, setup
 
+from django_slowtests import __version__
+
 
 def read(*parts):
     filename = path.join(path.dirname(__file__), *parts)
@@ -16,7 +18,7 @@ setup(
     description="locate your slowest tests",
     name="django-slowtests",
     long_description=read("README.rst"),
-    version="0.5.1",
+    version=__version__,
     url="https://github.com/realpython/django-slow-tests",
     license="MIT",
     packages=find_packages(),
