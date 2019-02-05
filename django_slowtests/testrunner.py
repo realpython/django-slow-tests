@@ -191,7 +191,7 @@ class DiscoverSlowestTestsRunner(DiscoverRunner):
                     print("\n{r} slowest tests:".format(r=test_result_count))
 
             for func_name, timing in test_results:
-                print("{t:.4f}s {f}".format(f=func_name, t=timing))
+                print("{t:.4f}s {f}".format(f=func_name, t=float(timing)))
 
             if not len(test_results) and SLOW_TEST_THRESHOLD_MS:
                 print("\nNo tests slower than {ms}ms".format(
