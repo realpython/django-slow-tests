@@ -1,5 +1,6 @@
 include AUTHORS
 include LICENSE
 include README.rst
+include CHANGELOG.rst
 recursive-include django_slowtests/static *
 recursive-include django_slowtests/templates *
