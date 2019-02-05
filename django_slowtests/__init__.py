@@ -1,4 +1,8 @@
-from django.core.exceptions import ImproperlyConfigured
+try:
+    from django.core.exceptions import ImproperlyConfigured
+except ImportError:
+    class ImproperlyConfigured(Exception):
+        pass
 
 try:
     from testrunner import DiscoverSlowestTestsRunner  # NOQA
