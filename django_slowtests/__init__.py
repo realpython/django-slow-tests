@@ -9,4 +9,4 @@ try:
 except (ImportError, ImproperlyConfigured):
     pass
 
-__version__ = "1.0.1.dev"
+__version__ = "1.0.2"
