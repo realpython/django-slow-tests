@@ -5,6 +5,10 @@ Current
 -------
 - Nothing yet
 
+1.0.3 (2019-02-05)
+- Fixed cast error, leading to slow test ordering issues
+- Fixed test case
+
 1.0.2 (2019-02-05)
 - Handle django not installed case to ease installation
 

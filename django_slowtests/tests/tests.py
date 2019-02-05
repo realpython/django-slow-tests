@@ -11,7 +11,8 @@ class TimingSuiteTests(TestCase):
         result = TestResult()
         suite.addTest(FakeTestCase('test_slow_thing'))
         suite.addTest(FakeTestCase('test_setup_class_was_run'))
-        suite.run(result)
+        with patch.object(suite, 'save_test_time') as mock:
+            suite.run(result)
         self.assertEquals(len(suite._tests), 2)
         self.assertEquals(len(result.errors), 0)
 

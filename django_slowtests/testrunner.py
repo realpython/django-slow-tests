@@ -211,7 +211,8 @@ class DiscoverSlowestTestsRunner(DiscoverRunner):
         for report_file in self.read_timing_files():
             with open(report_file, "r") as f:
                 for line in f:
-                    timings.append(line.strip('\n').split(','))
+                    name, duration = line.strip('\n').split(',')
+                    timings.append((name, float(duration)))
             os.remove(report_file)
         return timings
 
