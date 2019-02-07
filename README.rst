@@ -45,8 +45,13 @@ Instructions
 
 
 3.1. Save report to file::
-
     $ python manage.py test --slowreportpath report.json
+
+3.2. Generating full reports to file::
+    In some situations, you may need to generate full tests reports. To do so,
+    set NUM_SLOW_TESTS to None in your settings and run the following command:
+    $ python manage.py test --slowreportpath report.json
+
 
 4. Sample output::
 

@@ -5,6 +5,9 @@ Current
 -------
 - Nothing yet
 
+1.1.0 (2019-02-07)
+- Added option to generate full tests reports by passing None to NUM_SLOW_TESTS
+
 1.0.3 (2019-02-05)
 - Fixed cast error, leading to slow test ordering issues
 - Fixed test case

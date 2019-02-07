@@ -235,9 +235,9 @@ class DiscoverSlowestTestsRunner(DiscoverRunner):
 
         # Grab slowest tests
         timings = self.get_timings()
-        by_time = sorted(
-            timings, key=lambda x: x[1], reverse=True
-        )[:NUM_SLOW_TESTS]
+        by_time = sorted(timings, key=lambda x: x[1], reverse=True)
+        if by_time is not None:
+            by_time = by_time[:NUM_SLOW_TESTS]
         test_results = by_time
 
         if SLOW_TEST_THRESHOLD_MS:
