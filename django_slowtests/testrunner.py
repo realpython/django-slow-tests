@@ -221,7 +221,9 @@ class DiscoverSlowestTestsRunner(DiscoverRunner):
             os.remove(report_file)
 
     def suite_result(self, suite, result):
-        super(DiscoverSlowestTestsRunner, self).suite_result(suite, result)
+        return_value = super(DiscoverSlowestTestsRunner, self).suite_result(
+            suite, result
+        )
         NUM_SLOW_TESTS = getattr(settings, 'NUM_SLOW_TESTS', 10)
         SLOW_TEST_THRESHOLD_MS = getattr(settings, 'SLOW_TEST_THRESHOLD_MS', 0)
 
@@ -231,7 +233,7 @@ class DiscoverSlowestTestsRunner(DiscoverRunner):
         )
         if not should_generate_report:
             self.remove_timing_tmp_files()
-            return
+            return return_value
 
         # Grab slowest tests
         timings = self.get_timings()
@@ -256,3 +258,4 @@ class DiscoverSlowestTestsRunner(DiscoverRunner):
                 test_results.append(result)
 
         self.generate_report(test_results, result)
+        return return_value

@@ -5,6 +5,9 @@ Current
 -------
 - Nothing yet
 
+1.1.1 (2019-02-12)
+- Return error code to shell in case of failed tests
+
 1.1.0 (2019-02-07)
 - Added option to generate full tests reports by passing None to NUM_SLOW_TESTS
 
