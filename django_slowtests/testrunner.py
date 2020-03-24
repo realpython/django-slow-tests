@@ -247,7 +247,7 @@ class DiscoverSlowestTestsRunner(DiscoverRunner):
             test_results = []
 
             for result in by_time:
-                # Convert test time from seconds to miliseconds for comparison
+                # Convert test time from seconds to milliseconds for comparison
                 result_time_ms = result[1] * 1000
 
                 # If the test was under the threshold
