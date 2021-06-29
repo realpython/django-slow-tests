@@ -150,7 +150,7 @@ class DiscoverSlowestTestsRunner(DiscoverRunner):
 
     @classmethod
     def add_arguments(cls, parser):
-        DiscoverRunner.add_arguments(parser)
+        super(DiscoverSlowestTestsRunner, cls).add_arguments(parser)
         parser.add_argument(
             '--slowreport',
             action='store_true',
